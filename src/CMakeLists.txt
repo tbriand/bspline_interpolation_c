@@ -28,7 +28,11 @@ endif()
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra")
 
 add_library(Splinter bspline.c bspline.h splinter.c splinter.h)
-target_link_libraries(Splinter ${GSL_LIBRARIES} m)
+if(GSL_FOUND)
+  target_link_libraries(Splinter ${GSL_LIBRARIES} m)
+else()
+  target_link_libraries(Splinter m)
+endif()
 
 add_executable(bspline bspline_main.c splinter_transform.c homography_tools.c)
 target_link_libraries(bspline IIOLIB Splinter)
